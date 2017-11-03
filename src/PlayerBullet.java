@@ -4,4 +4,8 @@ public class PlayerBullet extends Character {
 // extendsしたCharacterクラスのコンストラクタ呼び出す
 		super(x, y, vx, vy);
 	}
+	public void draw(MyFrame f) {
+		f.setColor(255, 255, 255);
+		f.fillRect(x + 12, y - 26, 6, 20);
+	}
 }

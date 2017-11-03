@@ -12,6 +12,8 @@ public class GameFrame extends MyFrame {
 		// イベントリスナー登録
 		addKeyListener(GameWorld.player);
 		GameWorld.playerBullets = new Vector<PlayerBullet>();
+		GameWorld.enemies = new Vector<Enemy>();
+		GameWorld.enemies.add(new EnemyBase(100, 50, 1, 0));
 
 		int autoShootInterval = 0;
 		while(true) {
@@ -19,11 +21,15 @@ public class GameFrame extends MyFrame {
 			GameWorld.player.draw(this);
 			GameWorld.player.move();
 			movePlayerBullets(autoShootInterval);
+			moveEnemies();
 			sleep(0.03);
 			autoShootInterval += 1;
 		}
 	}
 	public void movePlayerBullets(int autoShootInterval) {
+		/**
+		 * オートショット+スペースキーでのショット
+		 */
 		if (autoShootInterval % 3 == 0) {
 			GameWorld.player.shoot();
 		}
@@ -37,6 +43,13 @@ public class GameFrame extends MyFrame {
 			} else {
 				i++;
 			}
+		}
+	}
+	public void moveEnemies() {
+		for (int i = 0; i < GameWorld.enemies.size(); i++){
+			Enemy e = GameWorld.enemies.get(i);
+			e.draw(this);
+			e.move();
 		}
 	}
 }

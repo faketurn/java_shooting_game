@@ -14,23 +14,22 @@ public class GameFrame extends MyFrame {
 		GameWorld.playerBullets = new Vector<PlayerBullet>();
 		GameWorld.enemies = new Vector<Enemy>();
 		GameWorld.enemies.add(new EnemyBase(100, 50, 1, 0));
+		AutoShootInterval interval = new AutoShootInterval();
 
-		int autoShootInterval = 0;
 		while(true) {
 			clear();
 			GameWorld.player.draw(this);
 			GameWorld.player.move();
-			movePlayerBullets(autoShootInterval);
+			movePlayerBullets(interval.add());
 			moveEnemies();
 			sleep(0.03);
-			autoShootInterval += 1;
 		}
 	}
-	public void movePlayerBullets(int autoShootInterval) {
+	public void movePlayerBullets(int interval) {
 		/**
 		 * オートショット+スペースキーでのショット
 		 */
-		if (autoShootInterval % 3 == 0) {
+		if (interval % 3 == 0) {
 			GameWorld.player.shoot();
 		}
 		int i = 0;

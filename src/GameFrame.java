@@ -8,8 +8,9 @@ import java.util.Vector;
 
 public class GameFrame extends MyFrame {
 	public void run() {
+		// 時機の登場位置
 		GameWorld.player = new Player(30, 350, 0, 0);
-		// イベントリスナー登録
+		// キーボードに反応するよう、イベントリスナー登録
 		addKeyListener(GameWorld.player);
 		GameWorld.playerBullets = new Vector<PlayerBullet>();
 		GameWorld.enemies = new Vector<Enemy>();

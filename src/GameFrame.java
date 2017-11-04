@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class GameFrame extends MyFrame {
 	public void run() {
-		GameWorld.player = new Player(100, 300, 0, 0);
+		GameWorld.player = new Player(30, 350, 0, 0);
 		// イベントリスナー登録
 		addKeyListener(GameWorld.player);
 		GameWorld.playerBullets = new Vector<PlayerBullet>();
@@ -23,6 +23,7 @@ public class GameFrame extends MyFrame {
 			movePlayerBullets(interval.add());
 			moveEnemies();
 			checkPlayerAndEnemies();
+			checkPlayerBulletsAndEnemies();
 			sleep(0.03);
 		}
 	}
@@ -59,6 +60,23 @@ public class GameFrame extends MyFrame {
 				System.out.println("やられた！");
 				GameWorld.player.y = -1000;
 			}
+		}
+	}
+	public void checkPlayerBulletsAndEnemies() {
+		int i = 0;
+		while (i < GameWorld.playerBullets.size()) {
+			PlayerBullet b = GameWorld.playerBullets.get(i);
+			int j = 0;
+			while (j < GameWorld.enemies.size()) {
+				Enemy e = GameWorld.enemies.get(j);
+				if (Math.abs(e.x - b.x) <= 30 && Math.abs(e.y - b.y) <= 30) {
+					System.out.println("あたった！");
+					GameWorld.enemies.remove(j);
+				} else {
+					j++;
+				}
+			}
+			i++;
 		}
 	}
 }

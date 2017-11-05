@@ -17,6 +17,16 @@ public class Player extends Character implements KeyListener {
 		System.out.println("弾の数:" + GameWorld.playerBullets.size());
 	}
 
+	private int count;
+	public int addInterval() {
+		count++;
+//		System.out.println(count);
+		if (count >= 4) {
+			count = 1;
+		}
+		return count;
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO 自動生成されたメソッド・スタブ

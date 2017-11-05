@@ -9,7 +9,7 @@ import java.util.Vector;
 public class GameFrame extends MyFrame {
 	public void run() {
 		// 時機の登場位置
-		GameWorld.player = new Player(30, 350, 0, 0);
+		GameWorld.player = new Player(30, 660, 0, 0);
 		// キーボードに反応するよう、イベントリスナー登録
 		addKeyListener(GameWorld.player);
 		GameWorld.playerBullets = new Vector<PlayerBullet>();
@@ -68,16 +68,22 @@ public class GameFrame extends MyFrame {
 		while (i < GameWorld.playerBullets.size()) {
 			PlayerBullet b = GameWorld.playerBullets.get(i);
 			int j = 0;
+			int hits = 0;
 			while (j < GameWorld.enemies.size()) {
 				Enemy e = GameWorld.enemies.get(j);
 				if (Math.abs(e.x - b.x) <= 30 && Math.abs(e.y - b.y) <= 30) {
 					System.out.println("あたった！");
+					hits++;
 					GameWorld.enemies.remove(j);
 				} else {
 					j++;
 				}
 			}
-			i++;
+			if (hits > 0) {
+				GameWorld.playerBullets.remove(i);
+			} else {
+				i++;
+			}
 		}
 	}
 }

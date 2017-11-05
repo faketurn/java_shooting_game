@@ -13,7 +13,7 @@ public class Player extends Character implements KeyListener {
 		f.fillRect(x, y, 30, 30);
 	}
 	public void shoot() {
-		GameWorld.playerBullets.add(new PlayerBullet(x, y, 0, -10));
+		GameWorld.playerBullets.add(new PlayerBullet(x, y, 0, -20));
 		System.out.println("弾の数:" + GameWorld.playerBullets.size());
 	}
 

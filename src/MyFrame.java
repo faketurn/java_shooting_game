@@ -33,8 +33,8 @@ public class MyFrame extends Frame implements Runnable {
 	 */
 	public MyFrame() {
 		super();
-		setSize(400,400	);
-		im=new BufferedImage(400, 400, BufferedImage.TYPE_INT_ARGB);
+		setSize(500,720);
+		im=new BufferedImage(500, 720, BufferedImage.TYPE_INT_ARGB);
 		setBackground(Color.black);
 		setVisible(true);
 		addWindowListener(new WindowAdapter() {

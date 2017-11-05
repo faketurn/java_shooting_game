@@ -6,7 +6,7 @@ public class EnemyBase extends Enemy {
 	public void move() {
 		super.move();
 		if (x < 100) { vx = 1; }
-		if (300 < x) { vx = -1; }
+		if (400 < x) { vx = -1; }
 		if (Math.random() < 0.005) {
 			GameWorld.enemies.add(new StraightEnemy(x, y, 0, 2));
 		}

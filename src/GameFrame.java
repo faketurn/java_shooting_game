@@ -1,3 +1,4 @@
+import java.awt.GraphicsEnvironment;
 import java.util.Vector;
 
 /**
@@ -8,6 +9,11 @@ import java.util.Vector;
 
 public class GameFrame extends MyFrame {
 	public void run() {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		String[] fs = ge.getAvailableFontFamilyNames();
+		for (String name : fs) {
+			System.out.println(name);
+		}
 		// 時機の登場位置
 		GameWorld.player = new Player(30, 660, 0, 0);
 		// キーボードに反応するよう、イベントリスナー登録
@@ -24,6 +30,14 @@ public class GameFrame extends MyFrame {
 			moveEnemies();
 			checkPlayerAndEnemies();
 			checkPlayerBulletsAndEnemies();
+			System.out.println(GameWorld.enemies.size());
+			if (GameWorld.enemies.size() == 0) {
+				setColor(255, 255, 50);
+				drawString("STAGE CLEAR", 55, 300, 60);
+			} else if (GameWorld.player.y < 0) {
+				setColor(255, 0, 0);
+				drawString("GAME OVER", 80, 300, 60);
+			}
 			sleep(0.03);
 		}
 	}
@@ -31,9 +45,9 @@ public class GameFrame extends MyFrame {
 		/**
 		 * オートショット+スペースキーでのショット
 		 */
-		if (interval % 3 == 0) {
-			GameWorld.player.shoot();
-		}
+//		if (interval % 3 == 0) {
+//			GameWorld.player.shoot();
+//		}
 		int i = 0;
 		while (i < GameWorld.playerBullets.size()) {
 			PlayerBullet b = GameWorld.playerBullets.get(i);
@@ -52,11 +66,20 @@ public class GameFrame extends MyFrame {
 			e.draw(this);
 			e.move();
 		}
+		int i = 0;
+		while (i < GameWorld.enemies.size()) {
+			Enemy e = GameWorld.enemies.get(i);
+			if (e.y > 720) {
+				GameWorld.enemies.remove(i);
+			} else {
+				i++;
+			}
+		}
 	}
 	public void checkPlayerAndEnemies() {
 		for (int i = 0; i < GameWorld.enemies.size(); i++) {
 			Enemy e = GameWorld.enemies.get(i);
-			if (checkHit(GameWorld.player, e)) {
+			if (checkHit(GameWorld.player, e, 30)) {
 				System.out.println("やられた！");
 				GameWorld.player.y = -1000;
 			}
@@ -67,26 +90,29 @@ public class GameFrame extends MyFrame {
 		while (i < GameWorld.playerBullets.size()) {
 			PlayerBullet b = GameWorld.playerBullets.get(i);
 			int j = 0;
-			int hits = 0;
+			int bulletLife = 1;
 			while (j < GameWorld.enemies.size()) {
 				Enemy e = GameWorld.enemies.get(j);
-				if (checkHit(e, b)) {
+				if (checkHit(e, b, 30)) {
 					System.out.println("あたった！");
-					hits++;
+					bulletLife--;
+					e.life--;
+				}
+				if (e.life < 0) {
 					GameWorld.enemies.remove(j);
 				} else {
 					j++;
 				}
 			}
-			if (hits > 0) {
+			if (bulletLife <= 0) {
 				GameWorld.playerBullets.remove(i);
 			} else {
 				i++;
 			}
 		}
 	}
-	public boolean checkHit(Character a, Character b) {
-		if (Math.abs(a.x - b.x) <= 30 && Math.abs(a.y - b.y) <= 30) {
+	public boolean checkHit(Character a, Character b, int distance) {
+		if (Math.abs(a.x - b.x) <= distance && Math.abs(a.y - b.y) <= distance) {
 			return true;
 		} else {
 			return false;

@@ -161,14 +161,14 @@ public class MyFrame extends Frame implements Runnable {
 		Graphics g=getImageGraphics();
 		if (g!=null) {
 			g.setColor(col);
-			g.setFont(new Font("Monospaced",0,size));
+			g.setFont(new Font("Monospaced",Font.BOLD,size));
 			g.drawString(str, x, y);
 		}
 		//if (locked) return;
 		g=getGraphics();
 		if (g!=null) {
 			g.setColor(col);
-			g.setFont(new Font("Monospaced",0,size));
+			g.setFont(new Font("Monospaced",Font.BOLD,size));
 			g.drawString(str, x, y);
 		}
 	}

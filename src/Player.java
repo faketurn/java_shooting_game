@@ -75,6 +75,6 @@ public class Player extends Character implements KeyListener {
 //		if (x < 0) { x = 0; }
 //		if (370 < x) { x = 370; }
 		if (x < 8) { x = 8; }
-		if (362 < x) { x = 362; }
+		if (462 < x) { x = 462; }
 	}
 }
